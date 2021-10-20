@@ -388,7 +388,8 @@ class _VibrationRefreshIndicatorState extends State<VibrationRefreshIndicator>
           child: child,
           builder: (BuildContext buildContext, Widget? child) {
             return Transform.translate(
-              offset: Offset(0.0, _positionController.value * 100),
+              offset: Offset(
+                  0.0, _positionController.value * 100 * _kDragSizeFactorLimit),
               child: child,
             );
           },
