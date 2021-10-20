@@ -359,16 +359,14 @@ class _VibrationRefreshIndicatorState extends State<VibrationRefreshIndicator>
         child: widget.child,
       ),
     );
-    assert(() {
-      if (_mode == null) {
-        assert(_dragOffset == null);
-        assert(_isIndicatorAtTop == null);
-      } else {
-        assert(_dragOffset != null);
-        assert(_isIndicatorAtTop != null);
-      }
-      return true;
-    }());
+
+    if (_mode == null) {
+      assert(_dragOffset == null);
+      assert(_isIndicatorAtTop == null);
+      return child;
+    }
+    assert(_dragOffset != null);
+    assert(_isIndicatorAtTop != null);
 
     final bool showIndeterminateIndicator =
         _mode == _RefreshIndicatorMode.refresh ||
@@ -376,14 +374,15 @@ class _VibrationRefreshIndicatorState extends State<VibrationRefreshIndicator>
 
     return Stack(
       children: <Widget>[
-        Positioned(
-          top: _mode != null && _mode! == _RefreshIndicatorMode.refresh
-              ? 100
-              : 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
+        AnimatedBuilder(
+          animation: _positionController,
           child: child,
+          builder: (BuildContext buildContext, Widget? child) {
+            return Transform.translate(
+              offset: Offset(0.0, _positionController.value * 100 * 1.5),
+              child: child,
+            );
+          },
         ),
         if (_mode != null)
           Positioned(
