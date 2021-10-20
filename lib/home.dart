@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:refresh_layout/refresh.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -27,7 +28,7 @@ class Home extends StatelessWidget {
                   );
                 }),
           ),
-          RefreshIndicator(
+          VibrationRefreshIndicator(
             onRefresh: () async {
               await Future.delayed(Duration(seconds: 3));
             },
