@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.refresh_layout">
+    <uses-permission android:name="android.permission.VIBRATE"/>
    <application
         android:label="refresh_layout"
         android:icon="@mipmap/ic_launcher">
