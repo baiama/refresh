@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 import 'package:refresh_layout/refresh.dart';
 
 class Home extends StatelessWidget {
@@ -11,6 +12,10 @@ class Home extends StatelessWidget {
         title: Text('Refresh'),
       ),
       body: VibrationRefreshIndicator(
+        //distance between child and top default 100
+        childOffset: 100,
+        //vibration types default FeedbackType.medium
+        feedbackType: FeedbackType.medium,
         onRefresh: () async {
           await Future.delayed(Duration(seconds: 3));
         },
