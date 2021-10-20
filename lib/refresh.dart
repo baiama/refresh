@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'dart:math' as math;
+import 'package:flutter_vibrate/flutter_vibrate.dart';
 
 enum _RefreshIndicatorMode {
   drag, // Pointer is down.
@@ -326,7 +327,7 @@ class _VibrationRefreshIndicatorState extends State<VibrationRefreshIndicator>
           // Show the indeterminate progress indicator.
           _mode = _RefreshIndicatorMode.refresh;
         });
-
+        _vibrate();
         final Future<void> refreshResult = widget.onRefresh();
         refreshResult.whenComplete(() {
           if (mounted && _mode == _RefreshIndicatorMode.refresh) {
@@ -336,6 +337,14 @@ class _VibrationRefreshIndicatorState extends State<VibrationRefreshIndicator>
         });
       }
     });
+  }
+
+  void _vibrate() async {
+    bool canVibrate = await Vibrate.canVibrate;
+    if (canVibrate) {
+      Vibrate.vibrate();
+      Vibrate.feedback(FeedbackType.medium);
+    }
   }
 
   Future<void> show({bool atTop = true}) {
@@ -379,7 +388,7 @@ class _VibrationRefreshIndicatorState extends State<VibrationRefreshIndicator>
           child: child,
           builder: (BuildContext buildContext, Widget? child) {
             return Transform.translate(
-              offset: Offset(0.0, _positionController.value * 100 * 1.5),
+              offset: Offset(0.0, _positionController.value * 100),
               child: child,
             );
           },
