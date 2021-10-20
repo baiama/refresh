@@ -376,7 +376,15 @@ class _VibrationRefreshIndicatorState extends State<VibrationRefreshIndicator>
 
     return Stack(
       children: <Widget>[
-        child,
+        Positioned(
+          top: _mode != null && _mode! == _RefreshIndicatorMode.refresh
+              ? 100
+              : 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          child: child,
+        ),
         if (_mode != null)
           Positioned(
             top: _isIndicatorAtTop! ? widget.edgeOffset : null,
