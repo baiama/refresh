@@ -60,6 +60,8 @@ class VibrationRefreshIndicator extends StatefulWidget {
     this.semanticsValue,
     this.strokeWidth = 2.0,
     this.triggerMode = RefreshIndicatorTriggerMode.onEdge,
+    this.childOffset = 100,
+    this.feedbackType = FeedbackType.medium,
   }) : super(key: key);
 
   final double displacement;
@@ -73,7 +75,8 @@ class VibrationRefreshIndicator extends StatefulWidget {
   final String? semanticsValue;
   final double strokeWidth;
   final RefreshIndicatorTriggerMode triggerMode;
-
+  final double childOffset;
+  final FeedbackType feedbackType;
   @override
   State<VibrationRefreshIndicator> createState() =>
       _VibrationRefreshIndicatorState();
@@ -342,8 +345,8 @@ class _VibrationRefreshIndicatorState extends State<VibrationRefreshIndicator>
   void _vibrate() async {
     bool canVibrate = await Vibrate.canVibrate;
     if (canVibrate) {
-      Vibrate.vibrate();
-      Vibrate.feedback(FeedbackType.medium);
+      // Vibrate.vibrate();
+      Vibrate.feedback(widget.feedbackType);
     }
   }
 
@@ -389,7 +392,10 @@ class _VibrationRefreshIndicatorState extends State<VibrationRefreshIndicator>
           builder: (BuildContext buildContext, Widget? child) {
             return Transform.translate(
               offset: Offset(
-                  0.0, _positionController.value * 100 * _kDragSizeFactorLimit),
+                  0.0,
+                  _positionController.value *
+                      widget.childOffset *
+                      _kDragSizeFactorLimit),
               child: child,
             );
           },
